@@ -1,7 +1,10 @@
 <?php
+/**
+ * Change $url to the right subdomain where your rigs were listed
+ */
 class Filecontent {
     public $_count;
-    public $url = 'http://jmjmjm.ethosdistro.com/?json=yes';
+    public $url = 'http://custompanel.ethosdistro.com/?json=yes';
 
     private function getJson() {
         $json = file_get_contents($this->url);
