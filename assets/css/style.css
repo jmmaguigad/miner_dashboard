@@ -1,3 +1,4 @@
+/* Style.css - Custom CSS used */
 * {
     padding:0;
     margin:0;
@@ -6,6 +7,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
+    margin-top:10px;
 }
 
 table {
@@ -29,4 +31,20 @@ table tr td {
 
 tr td.hashes {
     color:#0081c6;
+}
+
+div.header_menu {
+    padding:10px;
+    height:30px;
+}
+
+div.header_menu a {
+    padding:10px;
+    border:1px solid #000;
+    border-radius:3px;
+    margin-top:10px;
+}
+
+div#active_workers {
+    margin-left:5px;
 }

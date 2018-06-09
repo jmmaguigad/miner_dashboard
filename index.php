@@ -1,59 +1,67 @@
 <?php
-include 'classes/Filecontent.php';
-$file = new Filecontent(); 
-$arr_values = $file->showContents();
-$countarray = $file->countArray();
-$header_values = $file->showHeaderValues();
+include 'includes/constant.php';
+include 'classes/Etherminecontent.php';
+$ethermine = new Etherminecontent();
+$dash_values = $ethermine->showContents(1,'');
+$miner_values = $ethermine->showContents(2,'');
+$countarray = count($miner_values);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rigs Dashboard</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-<table>
-    <tr>
-        <td><strong>Total Rigs:</strong> <?php echo $header_values[0]["per_total_rigs"]."&nbsp;&nbsp;&nbsp;&nbsp;<strong> Date Time: </strong>".date('m/d/Y H:i:s A',$header_values[0]["current_time"]); ?></td>
-    </tr>
-</table>
-<table>
-    <thead>
-        <tr>
-            <td>Version</td>
-            <td>Name</td>
-            <td>Hashes</td>
-            <td>Temps</td>
-            <td>PTune</td>
-            <td>Volts</td>
-            <td>Watts</td>
-            <td>Fans</td>
-            <td>Cores</td>
-            <td>Mem</td>
-        </tr>
-    </thead>
-    <tbody>                  
-        <?php
-        for($cnt = 0;$cnt < $countarray;$cnt++) {
-            echo "<tr>";
-            $result = $arr_values[$cnt];
-            echo "<td>".$result["version"]."</td>";
-            echo "<td>".$result["rack_loc"]."</td>";
-            echo "<td class='hashes'>".$result["miner_hashes"]."</td>";
-            echo "<td>".$result["temp"]."</td>";
-            echo "<td>".$result["powertune"]."</td>";
-            echo "<td>".$result["voltage"]."</td>";
-            echo "<td>".$result["watts"]."</td>";
-            echo "<td>".$result["fanrpm"]."</td>";
-            echo "<td>".$result["core"]."</td>";
-            echo "<td>".$result["mem"]."</td>";
-            echo "</tr>";
-        ?>
-        <?php } ?>        
-    </tbody>
-</table>
-</body>
-</html>
+<?php include_once('includes/header.php'); ?>
+<?php include_once('includes/header-menu.php'); ?>
+<hr>
+<div id="active_workers">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Hash Rates</h5>
+                    <h3 class="card-text text-center"><?php echo '<span data-toggle="tooltip" data-placement="bottom" title="Reported Hashrate">'.$ethermine::getHashRate($dash_values["currentStatistics"]["reportedHashrate"],1,2) . '</span><span data-toggle="tooltip" data-placement="bottom" title="Your effective current hashrate">' ." " . $ethermine::getHashRate($dash_values["currentStatistics"]["currentHashrate"],1,2).'</span>'; ?></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Active Workers</h5>
+                    <h3 class="card-text text-center"><?php echo $dash_values["currentStatistics"]["activeWorkers"]; ?></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Unpaid Balance</h5>
+                    <h3 class="card-text text-center"><?php echo $ethermine::getUnpaidValue($dash_values["currentStatistics"]["unpaid"]); ?></h3>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Reported Hash Rate</th>
+                <th scope="col">Current Hash Rate</th>
+                <th scope="col">Average Hash Rate</th>
+                <th scope="col">Last Seen</th>
+            </tr>
+        </thead>
+        <tbody>                  
+            <?php
+            for($cnt = 0;$cnt < $countarray;$cnt++) {
+                echo "<tr>";
+                $result = $miner_values[$cnt];
+                echo '<td><a href="riginfo.php?worker='.$result["worker"].'">'.$result["worker"].'</a></td>';
+                echo "<td>".$ethermine::getHashRate($result["reportedHashrate"],1,1)."</td>";
+                echo "<td class='hashes'>".$ethermine::getHashRate($result["currentHashrate"],1,1)."</td>";
+                echo "<td>".$ethermine::getHashRate($result["averageHashrate"],1,1)."</td>";
+                echo "<td>". $ethermine::lastSeen(date('Y-m-d H:i',$result["lastSeen"])) ."</td>";
+                echo "</tr>";
+            ?>
+            <?php } ?>        
+        </tbody>
+    </table>
+</div>
+<?php include_once('includes/footer.php'); ?>
