@@ -1,5 +1,6 @@
 # miner_dashboard
 
-How to use
-1. Just edit url variable in classes > Filecontent.php for your ethosdistro subdomain
-2. Then point to http://domain/file_folder/index.php
+For Ethermine
+> Navigate to includes > constant.php and edit WALLET_ADDRESS, this variable is needed to access ethermine api.
+For Ethosdistro
+> Navigate to classes > Ethosdistrocontent.php and edit url used to access the json api.
