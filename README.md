@@ -1,6 +1,6 @@
 # Miner Dashboard
 
-A simple program used to interact with ethermine api, sparkpool api and json api of ethosdistro api
+A program used to interact with ethermine api, sparkpool api and json api of ethosdistro api
 
 ## Getting Started
 ### Setup
