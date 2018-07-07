@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Dashboard</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-</nav>
+<div class="btn-holder">
+  <a class="btn btn-success" title="Spark Pool" href="index.php">Spark Pool</a>
+  <a class="btn btn-success" title="Ethermine" href="index.php">Ethermine</a>
+  <a class="btn btn-success" title="Ethosdistro" href="index.php">Ethosdistro</a>
+</div>
+<div class="clearfix"></div>
+<strong>Page will update every 20 minutes</strong>
