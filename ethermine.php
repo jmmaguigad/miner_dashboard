@@ -1,15 +1,15 @@
 <?php
 include 'includes/constant.php';
-include 'classes/Sparkpoolcontent.php';
-$ethermine = new Sparkpoolcontent();
-// $dash_values = $ethermine->showContents(1,'');
-$miner_values = $ethermine->showContents(1,'');
+include 'classes/Etherminecontent.php';
+$ethermine = new Etherminecontent();
+$dash_values = $ethermine->showContents(1,'');
+$miner_values = $ethermine->showContents(2,'');
 $countarray = count($miner_values);
 ?>
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/header-menu.php'); ?>
 <hr>
-<!-- <div id="active_workers">
+<div id="active_workers">
     <div class="row">
         <div class="col-sm-3">
             <div class="card text-white bg-info mb-3">
@@ -36,7 +36,7 @@ $countarray = count($miner_values);
             </div>
         </div>
     </div>  
-</div> -->
+</div>
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark">
@@ -53,11 +53,11 @@ $countarray = count($miner_values);
             for($cnt = 0;$cnt < $countarray;$cnt++) {
                 echo "<tr>";
                 $result = $miner_values[$cnt];
-                echo '<td><a href="#">'.$result["rig"].'</a></td>';
-                echo "<td>".round($result["meanLocalHashrate1d"],2)." MH/s"."</td>";
-                echo "<td class='hashes'>".$ethermine::getHashRate($result["hashrate"],1,1)."</td>";
-                echo "<td>".$ethermine::getHashRate($result["hashrate1d"],1,1)."</td>";
-                echo "<td>". $ethermine::lastSeen(date('Y-m-d H:i',strtotime($result["time"]))) ."</td>";
+                echo '<td><a href="riginfo.php?worker='.$result["worker"].'">'.$result["worker"].'</a></td>';
+                echo "<td>".$ethermine::getHashRate($result["reportedHashrate"],1,1)."</td>";
+                echo "<td class='hashes'>".$ethermine::getHashRate($result["currentHashrate"],1,1)."</td>";
+                echo "<td>".$ethermine::getHashRate($result["averageHashrate"],1,1)."</td>";
+                echo "<td>". $ethermine::lastSeen(date('Y-m-d H:i',$result["lastSeen"])) ."</td>";
                 echo "</tr>";
             ?>
             <?php } ?>        
