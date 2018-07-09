@@ -14,16 +14,33 @@ class Sparkpoolcontent {
         return $obj;
     }
 
+    /**
+     * 1 - workers data
+     * 2 - individual worker data
+     * 3 - workers count
+     * 4 - current hashrate
+     * 5 - bill info
+     */
     private function getContents($option,$worker) {
+        $wallet_address = strtolower(WALLET_ADDRESS);
         if ($option == 1) {
-            $option_value = "workers";
-            $url = $this->miner_url . DS . strtolower(WALLET_ADDRESS) . DS . $option_value . DS;            
+            $url = $this->miner_url . DS . $wallet_address . DS . 'workers/';            
         } else if ($option == 2) {
-            $url = $this->worker_url . DS . 'hashrate?wallet=' . strtolower(WALLET_ADDRESS) . '&rig=' . $worker;
+            $url = $this->worker_url . DS . 'hashrate?wallet=' . $wallet_address . '&rig=' . $worker;
+        } else if ($option == 3) {
+            $url = $this->miner_url . DS . $wallet_address . DS .'workers/counts';
+        } else if ($option == 4) {
+            $url = $this->miner_url . DS . $wallet_address . DS . 'shares';
+        } else if ($option == 5) {
+            $url = $this->miner_url . DS . $wallet_address . DS . 'billInfo';
         }
         $arr = $this->getJson($url);
-        $processedarray = array_values($arr);
-        return $processedarray[1];
+        if ($option == 5) {
+            return $arr;
+        } else {
+            $processedarray = array_values($arr);
+            return $processedarray[1];
+        }
     }
 
     public function showContents($option,$worker) {

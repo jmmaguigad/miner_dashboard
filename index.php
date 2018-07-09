@@ -1,42 +1,44 @@
 <?php
 include 'includes/constant.php';
 include 'classes/Sparkpoolcontent.php';
-$ethermine = new Sparkpoolcontent();
-// $dash_values = $ethermine->showContents(1,'');
-$miner_values = $ethermine->showContents(1,'');
+$sparkpool = new Sparkpoolcontent();
+$miner_values = $sparkpool->showContents(1,'');
 $countarray = count($miner_values);
+$miners_active = end($sparkpool->showContents(3,''));
+$miners_hashrate_info = end($sparkpool->showContents(4,''));
+$balance = $sparkpool->showContents(5,'');
 ?>
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/header-menu.php'); ?>
 <hr>
-<!-- <div id="active_workers">
+<div id="active_workers">
     <div class="row">
         <div class="col-sm-3">
             <div class="card text-white bg-info mb-3">
                 <div class="card-body">
                     <h5 class="card-title text-center">Hash Rates</h5>
-                    <h3 class="card-text text-center"><?php echo '<span data-toggle="tooltip" data-placement="bottom" title="Reported Hashrate">'.$ethermine::getHashRate($dash_values["currentStatistics"]["reportedHashrate"],1,2) . '</span><span data-toggle="tooltip" data-placement="bottom" title="Your effective current hashrate">' ." " . $ethermine::getHashRate($dash_values["currentStatistics"]["currentHashrate"],1,2).'</span>'; ?></h3>
+                    <h3 class="card-text text-center"><?php echo '<span data-toggle="tooltip" data-placement="bottom" title="Reported Hashrate">'. round($miners_hashrate_info["localHashrate"]/1000,2) . '</span><span data-toggle="tooltip" data-placement="bottom" title="Current Hashrate">' ." " . $sparkpool::getHashRate($miners_hashrate_info["hashrate"],1,2).'</span>'; ?></h3>
                 </div>
             </div>
-        </div>
+        </div> 
         <div class="col-sm-3">
             <div class="card text-white bg-success mb-3">
                 <div class="card-body">
                     <h5 class="card-title text-center">Active Workers</h5>
-                    <h3 class="card-text text-center"><?php echo $dash_values["currentStatistics"]["activeWorkers"]; ?></h3>
+                    <h3 class="card-text text-center"><?php echo $miners_active['count']; ?></h3>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="card text-white bg-warning mb-3">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Unpaid Balance</h5>
-                    <h3 class="card-text text-center"><?php echo $ethermine::getUnpaidValue($dash_values["currentStatistics"]["unpaid"]); ?></h3>
+                    <h5 class="card-title text-center">Balance</h5>
+                    <h3 class="card-text text-center"><?php echo $sparkpool::getUnpaidValue($balance["balance"]); ?></h3>
                 </div>
             </div>
         </div>
     </div>  
-</div> -->
+</div> 
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark">
@@ -55,9 +57,9 @@ $countarray = count($miner_values);
                 $result = $miner_values[$cnt];
                 echo '<td><a href="#">'.$result["rig"].'</a></td>';
                 echo "<td>".round($result["meanLocalHashrate1d"],2)." MH/s"."</td>";
-                echo "<td class='hashes'>".$ethermine::getHashRate($result["hashrate"],1,1)."</td>";
-                echo "<td>".$ethermine::getHashRate($result["hashrate1d"],1,1)."</td>";
-                echo "<td>". $ethermine::lastSeen(date('Y-m-d H:i',strtotime($result["time"]))) ."</td>";
+                echo "<td class='hashes'>".$sparkpool::getHashRate($result["hashrate"],1,1)."</td>";
+                echo "<td>".$sparkpool::getHashRate($result["hashrate1d"],1,1)."</td>";
+                echo "<td>". $sparkpool::lastSeen(date('Y-m-d H:i',strtotime($result["time"]))) ."</td>";
                 echo "</tr>";
             ?>
             <?php } ?>        
