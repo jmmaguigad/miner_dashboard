@@ -1,8 +1,6 @@
 <?php
 /**
- * TODOS:
- * 1 - Show dashboard options
- * 2 - Create database where needed values will be stored
+ * Sparkpoolcontent Class - Class that interacts with sparkpool api
  */
 class Sparkpoolcontent {
     protected $miner_url = 'https://eth.sparkpool.com/api/miner';
