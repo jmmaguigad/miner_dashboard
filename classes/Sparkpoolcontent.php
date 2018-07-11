@@ -99,8 +99,18 @@ class Sparkpoolcontent {
      * Meaning: 1 - MH/s , 2 - GH/s
      */
     public static function getHashRate($hash,$decimalpt,$prefix) {
-        $prefix_measurement = ($prefix == 1) ? "MH/s" : "GH/s";
-        $divisor = ($prefix == 1) ? 1000000 : 1000000000;
+        if ($prefix == 1) {
+            $prefix_measurement = "MH/s";
+            $divisor = 1000000;
+        } else if ($prefix == 2) {
+            $prefix_measurement = "GH/s";
+            $divisor = 1000000000;
+        } else if ($prefix == 3) {
+            $prefix_measurement = "GH/s";
+            $divisor = 1000;
+        }
+        // $prefix_measurement = ($prefix == 1) ? "MH/s" : "GH/s";
+        // $divisor = ($prefix == 1) ? 1000000 : 1000000000;
         return round($hash/$divisor,$decimalpt).' '.$prefix_measurement;
     }
 

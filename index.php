@@ -17,7 +17,7 @@ $balance = $sparkpool->showContents(5,'');
             <div class="card text-white bg-info mb-3">
                 <div class="card-body">
                     <h5 class="card-title text-center">Hash Rates</h5>
-                    <h3 class="card-text text-center"><?php echo '<span data-toggle="tooltip" data-placement="bottom" title="Reported Hashrate">'. round($miners_hashrate_info["localHashrate"]/1000,2) . '</span><span data-toggle="tooltip" data-placement="bottom" title="Current Hashrate">' ." " . $sparkpool::getHashRate($miners_hashrate_info["hashrate"],1,2).'</span>'; ?></h3>
+                    <h3 class="card-text text-center"><?php echo '<span data-toggle="tooltip" data-placement="bottom" title="Reported Hashrate">'. $sparkpool::getHashRate($miners_hashrate_info["localHashrate"],2,3) . '</span><span data-toggle="tooltip" data-placement="bottom" title="Current Hashrate">' ." " . $sparkpool::getHashRate($miners_hashrate_info["hashrate"],2,2).'</span>'; ?></h3>
                 </div>
             </div>
         </div> 
