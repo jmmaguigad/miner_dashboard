@@ -55,9 +55,11 @@ $balance = $sparkpool->showContents(5,'');
             for($cnt = 0;$cnt < $countarray;$cnt++) {
                 echo "<tr>";
                 $result = $miner_values[$cnt];
+                $reportedHashRate = round($result["meanLocalHashrate1d"],2);
+                $currentHashRate = $sparkpool::getHashRate($result["hashrate"],2,4);                
                 echo '<td><a href="#">'.$result["rig"].'</a></td>';
                 echo "<td>".round($result["meanLocalHashrate1d"],2)." MH/s"."</td>";
-                echo "<td class='hashes'>".$sparkpool::getHashRate($result["hashrate"],1,1)."</td>";
+                echo "<td class='hashes' ".$sparkpool::hashRateCheck($reportedHashRate,$currentHashRate).">".$sparkpool::getHashRate($result["hashrate"],1,1)."</td>";
                 echo "<td>".$sparkpool::getHashRate($result["hashrate1d"],1,1)."</td>";
                 echo "<td>". $sparkpool::lastSeen(date('Y-m-d H:i',strtotime($result["time"]))) ."</td>";
                 echo "</tr>";

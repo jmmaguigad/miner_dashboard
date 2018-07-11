@@ -108,10 +108,18 @@ class Sparkpoolcontent {
         } else if ($prefix == 3) {
             $prefix_measurement = "GH/s";
             $divisor = 1000;
+        } else if ($prefix == 4) {
+            $prefix_measurement = "";
+            $divisor = 1000000;            
         }
         // $prefix_measurement = ($prefix == 1) ? "MH/s" : "GH/s";
         // $divisor = ($prefix == 1) ? 1000000 : 1000000000;
         return round($hash/$divisor,$decimalpt).' '.$prefix_measurement;
+    }
+
+    public static function hashRateCheck($reported,$current) {
+        $color = ($current > ($reported - 10)) ? "" : "red";
+        return 'style=color:'.$color.'';
     }
 
     /**
